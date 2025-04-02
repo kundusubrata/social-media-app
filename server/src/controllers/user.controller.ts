@@ -14,6 +14,17 @@ export const getAllUsers = asyncHandler(
         email: true,
         profilePic: true,
         bio: true,
+        createdAt: true,
+        posts: true,
+        followers: true,
+        following: true,
+        _count: {
+          select: {
+            posts: true,
+            followers: true,
+            following: true,
+          },
+        },
       },
     });
 

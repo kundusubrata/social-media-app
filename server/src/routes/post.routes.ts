@@ -12,7 +12,7 @@ import { upload } from "../utils/cloudinaryConfig";
 const router = express.Router();
 
 router.route("/posts").post(isAuthenticated, upload.single("file"), createPost);
-router.route("/posts").get(getAllPosts);
+router.route("/posts").get(isAuthenticated,getAllPosts);
 router.route("/posts/:id").get(getPostById);
 router.route("/posts/:id").delete(isAuthenticated, deletePost);
 router.route("/posts/feed").get(isAuthenticated, getFeedPosts);

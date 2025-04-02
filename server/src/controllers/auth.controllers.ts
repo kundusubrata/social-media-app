@@ -128,6 +128,14 @@ export const getMe = asyncHandler(
         profilePic: true,
         bio: true,
         createdAt: true,
+        posts: true,
+        _count: {
+          select: {
+            posts: true,
+            followers: true,
+            following: true,
+          },
+        },
       },
     });
 

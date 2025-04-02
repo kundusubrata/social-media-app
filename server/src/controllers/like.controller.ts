@@ -180,3 +180,36 @@ export const toggleDislikePost = asyncHandler(
     });
   }
 );
+
+
+// Check if user has liked a post ====>>>> /api/v1/posts/:id/like-status
+export const getLikeStatus = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.id;
+    const userId = String(req.userId);
+
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        userId_postId: {
+          postId,
+          userId,
+        },
+      },
+    });
+
+    const existingDislike = await prisma.dislike.findUnique({
+      where: {
+        userId_postId: {
+          postId,
+          userId,
+        },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      liked: !!existingLike,
+      disliked: !!existingDislike
+    });
+  }
+);

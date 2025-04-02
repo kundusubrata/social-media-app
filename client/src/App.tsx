@@ -1,20 +1,13 @@
-import { Popover } from "radix-ui";
+import { RouterProvider } from "react-router-dom";
+import { Router } from "./router/Router";
+import {ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline"> Hello world! </h1>
-      <Popover.Root>
-        <Popover.Trigger>More info</Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content>
-            Some more info…
-            <Popover.Arrow />
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
+    <RouterProvider router={Router} />;
+    <ToastContainer position="top-center" autoClose={3000}/>
     </>
-  );
+  )
 }
-
 export default App;
