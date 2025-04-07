@@ -5,31 +5,34 @@ import CustomErrorHandler from "../utils/customErrorHandler";
 import prisma from "../config/prisma";
 import { cloudinary } from "../utils/cloudinaryConfig";
 import fs from "fs";
-import { count } from "console";
 
 // Create a new posts ====>>>> /api/v1/posts
 export const createPost = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { success, data } = createPostBody.safeParse(req.body);
+    // const { success, data } = createPostBody.safeParse(req.body);
     const userId = req.userId;
 
-    console.log(data);
+    // console.log(data);
 
     if (!userId) {
       return next(new CustomErrorHandler("Unauthorized", 401));
     }
 
-    if (!success) {
-      return next(new CustomErrorHandler("Invalid input", 400));
-    }
+    // if (!success) {
+    //   return next(new CustomErrorHandler("Invalid input", 400));
+    // }
 
-    const { content } = data;
+    // const { content } = data;
+    const { content } = req.body;
 
     if (!content && !req.file) {
       return next(
         new CustomErrorHandler("Post must have content or file", 400)
       );
     }
+
+    // console.log("BODY:", req.body);
+    // console.log("FILE:", req.file);
 
     let imageUrl;
     let imagePublicId;

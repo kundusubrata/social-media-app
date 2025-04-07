@@ -12,7 +12,7 @@ const Home = () => {
     toast.error(error.message || "Failed to load feed. Please try again");
   }
 
-  console.log(data);
+  // console.log(data);
   const { posts } = data;
 
   return (

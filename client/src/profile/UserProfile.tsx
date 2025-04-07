@@ -18,7 +18,7 @@ const UserProfile = () => {
     toast.error(error.message || "Failed to load profile. Please try again.");
   }
 
-  console.log(data);
+  // console.log(data);
   const {
     bio,
     createdAt,
@@ -28,7 +28,7 @@ const UserProfile = () => {
     posts,
     followersCount,
     followingCount,
-    postCount,
+    postsCount,
   } = data.data || {};
 
   return (
@@ -84,23 +84,14 @@ const UserProfile = () => {
             <span className="text-gray-600">Followers</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="font-bold">{postCount}</span>
+            <span className="font-bold">{postsCount}</span>
             <span className="text-gray-600">Posts</span>
           </div>
-        </div>
-
-        <div className="flex gap-2 mb-8">
-          <button className="bg-gray-200 text-black py-2 px-6 rounded-full hover:bg-blue-300">
-            Follow
-          </button>
-          <button className="bg-gray-200 text-black py-2 px-6 rounded-full hover:bg-red-300">
-            Unfollow
-          </button>
         </div>
       </div>
 
       {/* User Posts */}
-      <div className="mb-6">
+      <div className="mb-6 mt-12">
         <h2 className="text-xl font-semibold mb-4 px-4">Posts</h2>
 
         {Array.isArray(posts) && posts.length > 0 ? (

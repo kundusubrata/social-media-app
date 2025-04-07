@@ -100,7 +100,7 @@ export default function Signin() {
             disabled={isLoading}
             className="w-full px-4 py-2 my-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
           >
-            Sign Up
+            Sign In
           </button>
 
           {error && <p className="text-sm text-red-500">{error}</p>}

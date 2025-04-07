@@ -8,7 +8,7 @@ import followRoutes from "./routes/follow.routes";
 import postRoutes from "./routes/post.routes";
 import commentRoutes from "./routes/comment.routes";
 import likeRoutes from "./routes/like.routes";
-
+import path from "path";
 
 const app = express();
 const port = process.env.PORT || 7000;
@@ -27,6 +27,10 @@ app.use("/api/v1", commentRoutes);
 app.use("/api/v1", likeRoutes);
 
 // Static Files
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
 
 // Global Error Handler Middleware
 app.use(globalErrorMiddleware);

@@ -128,7 +128,11 @@ export const getMe = asyncHandler(
         profilePic: true,
         bio: true,
         createdAt: true,
-        posts: true,
+        posts: {
+          where: {
+            deletedAt: null,
+          },
+        },
         _count: {
           select: {
             posts: true,

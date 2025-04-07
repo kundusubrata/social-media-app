@@ -27,3 +27,21 @@ const getAllPosts = (url: string) => axios.get(url, {
   };
   
 
+
+  export const useDeletePost = () => {
+    const deletePost = async (postId: string) => {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Unauthorized");
+  
+      const res = await axios.delete(`/api/v1/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      return res.data;
+    };
+  
+    return { deletePost };
+  };
+  

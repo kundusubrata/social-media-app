@@ -4,6 +4,8 @@ import { FormatDate } from "../utils/FormatDate";
 import Loader from "../utils/Loader";
 import MyProfilePost from "../posts/MyProfilePost";
 import { toast } from "react-toastify";
+import EditProfile from "./EditProfile";
+import DeleteProfile from "./DeleteProfile";
 
 const MyProfile = () => {
   const { data, error, isLoading } = useMyProfile();
@@ -20,9 +22,8 @@ const MyProfile = () => {
   if (error) {
     toast.error(error.message || "Failed to load profile. Please try again.");
   }
-  
 
-  const { profilePic, username, createdAt, email, bio, posts, _count } =
+  const { id, profilePic, username, createdAt, email, bio, posts, _count } =
     data?.data || {};
 
   return (
@@ -70,12 +71,13 @@ const MyProfile = () => {
           </div>
 
           <div className="flex gap-2 mb-8">
-            <button className="bg-gray-200 text-black py-2 px-6 rounded-full hover:bg-blue-300">
-              Edit Profile
-            </button>
-            <button className="bg-gray-200 text-black py-2 px-6 rounded-full hover:bg-red-300">
-              Delete Profile
-            </button>
+            <EditProfile
+              myUserId={id}
+              myUsername={username}
+              myEmail={email}
+              myBio={bio}
+            />
+            <DeleteProfile userId={id} />
           </div>
         </div>
 
@@ -87,7 +89,7 @@ const MyProfile = () => {
             posts.map((post) => (
               <MyProfilePost
                 key={post.id}
-                id={post.id}
+                postId={post.id}
                 profileImage={profilePic || null}
                 name={username.charAt(0).toUpperCase() + username.slice(1)}
                 description={post.content}

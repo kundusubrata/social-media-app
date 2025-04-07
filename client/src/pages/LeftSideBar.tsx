@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLogout } from "../hooks/useAuth";
 import { toast } from "react-toastify";
 
-const LeftSideBar= () => {
+const LeftSideBar = () => {
   const navigate = useNavigate();
-  const {logout} = useLogout();
+  const { logout } = useLogout();
 
   const isAuthenticated = localStorage.getItem("token") ? true : false;
   
@@ -15,38 +15,43 @@ const LeftSideBar= () => {
     navigate("/");
     toast.success("Logged out successfully");
   }
+  
   const handleLogin = () => {
     navigate("/signin");
   }
+  
   return (
-    <div className="w-64 bg-white border-r h-screen p-4 flex flex-col">
-      <h2 className="text-2xl font-bold mb-8 text-primary">SocialConnect</h2>
+    <div className="flex flex-col h-full p-4">
+      <h2 className="text-2xl font-bold mb-8 text-primary hidden md:block">SocialConnect</h2>
 
-      <nav className="space-y-4">
+      <nav className="space-y-4 flex-1">
         <SidebarItem icon={<Home />} label="Home" to="/" />
         <SidebarItem icon={<User />} label="My Profile" to="/myprofile" />
-        <SidebarItem icon={<Users />} label="Followers" to="/followers" />
-        <SidebarItem icon={<Users />} label="Following" to="/following" />
+        {/* <SidebarItem icon={<Users />} label="Followers" to="/followers" /> */}
+        {/* <SidebarItem icon={<Users />} label="Following" to="/following" /> */}
+      </nav>
+      
+      <div className="mt-auto pt-4">
         {isAuthenticated ? (
           <button
-          onClick={handleLogout}
-          className="flex items-center space-x-3 p-2 rounded-md cursor-pointer 
-            hover:bg-gray-100 text-red-500 mt-auto w-full"
-        >
-          <LogOut />
-          <span className="font-medium">Logout</span>
-        </button>
-        ): (
+            onClick={handleLogout}
+            className="flex items-center space-x-3 p-2 rounded-md cursor-pointer 
+              hover:bg-gray-100 text-red-500 w-full"
+          >
+            <LogOut />
+            <span className="font-medium">Logout</span>
+          </button>
+        ) : (
           <button
-          onClick={handleLogin}
-          className="flex items-center space-x-3 p-2 rounded-md cursor-pointer 
-            hover:bg-gray-100 text-red-500 mt-auto w-full"
-        >
-          <LogIn />
-          <span className="font-medium">Login</span>
-        </button>
+            onClick={handleLogin}
+            className="flex items-center space-x-3 p-2 rounded-md cursor-pointer 
+              hover:bg-gray-100 text-blue-500 w-full"
+          >
+            <LogIn />
+            <span className="font-medium">Login</span>
+          </button>
         )}
-      </nav>
+      </div>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { EllipsisVerticalIcon, Heart, MessageCircle, ThumbsDown } from "lucide-react";
+import { Heart, MessageCircle, ThumbsDown } from "lucide-react";
+import { DeleteDropdown } from "./DeleteDropdown";
 
 
 interface MyProfilePostProps {
-  id: string;
+  postId: string;
   profileImage: string;
   name: string;
   description: string;
@@ -11,7 +12,7 @@ interface MyProfilePostProps {
 }
 
 const MyProfilePost = ({
-  id,
+  postId,
   profileImage,
   name,
   description,
@@ -40,7 +41,7 @@ const MyProfilePost = ({
           </div>
         </div>
         <div>
-            <EllipsisVerticalIcon />
+            <DeleteDropdown postId={postId} />
         </div>
       </div>
 

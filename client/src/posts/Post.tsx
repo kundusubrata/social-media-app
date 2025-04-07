@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import LikeButton from "./LikeButton";
 import DislikeButton from "./DislikeButton";
@@ -25,26 +24,28 @@ const Post = ({
   name,
   description,
   postImage,
-  commentsCount,
-  likesCount,
-  dislikesCount,
+  commentsCount = 0,
+  likesCount = 0,
+  dislikesCount = 0,
 }: PostProps) => {
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(true);
-  const [commentDialogOpen, setCommentDialogOpen] = useState(false);
   const currentUserId = localStorage.getItem("userId");
 
   // Check if the current user has already liked or disliked this post
   useEffect(() => {
     const checkInteractionStatus = async () => {
       try {
-        const response = await axios.get(`/api/v1/posts/${postId}/like-status`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        
+        const response = await axios.get(
+          `/api/v1/posts/${postId}/like-status`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
         setHasLiked(response.data.liked);
         setHasDisliked(response.data.disliked);
       } catch (error) {
@@ -94,21 +95,8 @@ const Post = ({
           disLikes={Number(dislikesCount)}
           initialDisliked={hasDisliked}
         />
-        <button 
-          className="flex items-center space-x-2 text-gray-600 hover:text-blue-500"
-          onClick={() => setCommentDialogOpen(true)}
-        >
-          <MessageCircle />
-          <span>{commentsCount || 0}</span>
-        </button>
+        <CommentDialog postId={postId} commentsCount={commentsCount} />
       </div>
-
-      {/* Comment Dialog */}
-      <CommentDialog 
-        postId={postId}
-        isOpen={commentDialogOpen}
-        onClose={() => setCommentDialogOpen(false)}
-      />
     </div>
   );
 };

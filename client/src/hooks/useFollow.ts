@@ -29,6 +29,7 @@ export const useFollow = () => {
       
       // Refresh data in the background
       mutate("/api/v1/users/");
+      // window.location.reload();
       
       toast.success(response.data.message);
       return true;
@@ -64,6 +65,7 @@ export const useFollow = () => {
       
       // Refresh data in the background
       mutate("/api/v1/users/");
+      // window.location.reload();
       
       toast.success(response.data.message);
       return true;
