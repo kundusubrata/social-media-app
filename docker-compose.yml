@@ -1,0 +1,38 @@
+services:
+  backend:
+    container_name: social-media-backend
+    image: social-media-backend
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server:/app/server
+      - /app/server/node_modules
+    environment:
+      PORT: 4000
+      DATABASE_URL: "postgresql://postgres:mysecretpassword@db:5432/socialmedia-app?schema=public"
+      JWT_SECRET: "1a88f5aa5167b51e197d0d9b2f9b828d70356d7edf947f2adc2849165034bf480a29f53d95ea8fa90f9bc2ec2e9cb846a65020c"
+      CLOUDINARY_CLOUD_NAME: ""
+      CLOUDINARY_API_KEY: ""
+      CLOUDINARY_API_SECRET: ""
+    command:  sh -c "npx prisma migrate deploy && pnpm run start"
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: socialmedia-app
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      retries: 5
